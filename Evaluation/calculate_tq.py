@@ -103,8 +103,9 @@ if __name__ == '__main__':
                 if multihop_thresholds_noo:
                     print(f'Now Remove Outliers ...')
                     new_alltime = list()
-                    for _, batch_time in alltime[args.alltime_type].items():
-                        new_alltime.append(batch_time)
+                    for round_time in alltime['inference']:
+                        for _, batch_time in round_time.items():
+                            new_alltime.append(batch_time)
                     alltime = remove_outliers(numpy.array(new_alltime))
                     tls = (min(alltime), max(alltime))
                 multihop_filepath = pathlib.Path(args.multihop_filepath)
