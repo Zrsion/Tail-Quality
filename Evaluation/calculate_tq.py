@@ -103,7 +103,7 @@ if __name__ == '__main__':
                 if multihop_thresholds_noo:
                     print(f'Now Remove Outliers ...')
                     new_alltime = list()
-                    for round_time in alltime['inference']:
+                    for round_time in alltime[args.alltime_type]:
                         for _, batch_time in round_time.items():
                             new_alltime.append(batch_time)
                     alltime = remove_outliers(numpy.array(new_alltime))
