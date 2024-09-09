@@ -15,6 +15,7 @@ from .metrics.mobile_net_faster   import MobileNetFaster
 from .metrics.light_gcn_faster    import LightGCNFaster
 
 from .utils.io import save_pickle, load_pickle
+from .utils.times import remove_outliers
 from .tail_quality import tail_quality
 from .calculate_tl import get_tail_latency
 
@@ -41,6 +42,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--multihop-thresholds-min', type=float, default=None)
     parser.add_argument('-r', '--multihop-thresholds-max', type=float, default=None)
     parser.add_argument('-o', '--multihop-thresholds-hop', type=float, default=None)
+    parser.add_argument('-i', '--multihop-thresholds-noo', action='store_true')
     parser.add_argument('--multihop-filepath', type=str, default=None)
 
     parser.add_argument('--alltime-type', type=str, choices=['inference', 'total'], required=True)
@@ -60,6 +62,7 @@ if __name__ == '__main__':
     multihop_thresholds_min = args.multihop_thresholds_min
     multihop_thresholds_max = args.multihop_thresholds_max
     multihop_thresholds_hop = args.multihop_thresholds_hop
+    multihop_thresholds_noo = args.multihop_thresholds_noo
 
     if multihop_thresholds_min is not None and multihop_thresholds_max is not None:
         assert multihop_thresholds_min < multihop_thresholds_max
@@ -97,6 +100,14 @@ if __name__ == '__main__':
             if args.multihop_filepath is not None:
                 print(f'You Specified Multihop Filepath')
                 print(f'Now Using Default Multihop Thresholds:')
+                if multihop_thresholds_noo:
+                    print(f'Now Remove Outliers ...')
+                    new_alltime = list()
+                    for round_time in alltime[args.alltime_type]:
+                        for _, batch_time in round_time.items():
+                            new_alltime.append(batch_time)
+                    alltime = remove_outliers(numpy.array(new_alltime))
+                    tls = (min(alltime), max(alltime))
                 multihop_filepath = pathlib.Path(args.multihop_filepath)
                 multihop_thresholds = numpy.linspace(tls[0], tls[1], 100, dtype=float).tolist()
                 print(f'Multihop: Min = {tls[0]:.3f} | Max = {tls[1]:.3f} | Hop = 100')

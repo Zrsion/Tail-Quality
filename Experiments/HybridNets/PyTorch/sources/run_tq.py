@@ -544,7 +544,13 @@ if __name__ == "__main__":
         model.cuda()
 
     model.eval()
-
+    if fake_run:
+        parameters_number = get_model_parameters_number(model)
+        parameters_number_str = str()
+        for name, number in parameters_number.items():
+            parameters_number_str += f'{name}: {number} Elements ;\n'
+        parameters_number_str += f'Total: {sum(parameters_number.values())} Elements .\n'
+        logger.info(f'parameters:\n{parameters_number_str}')
     # [!End] Model Initialization
 
     sucess_flag = False
