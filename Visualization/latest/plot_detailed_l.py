@@ -52,23 +52,7 @@ if __name__ == '__main__':
     for index, (percentile, latencies) in enumerate(specific_latencies.items()):
         if nrows == 1 and ncols == 1:
             ax = axs
-        if nrows != 1 and ncols == 1:
-            ax = axs[index]
-        if nrows != 1 and ncols != 1:
-            row_id, col_id = divmod(index, nrows)
-            ax = axs[row_id, col_id]
-        # ax.violinplot(latencies[:4], showmeans=True, showmedians=True)
-        ax.boxplot(latencies[:4]+latencies[-4:])
-        ax.set_title(f'The Change of Tail Latencies (>={percentile*100}%)')
-        ax.set_xticks([tick for tick in range(1, len(xtick_labels[:4] + xtick_labels[-4:])+1)], labels=xtick_labels[:4] + xtick_labels[-4:])
-        ax.set_xlabel('Inference Round')
-        ax.set_ylabel('Inference Time (seconds)')
-    pyplot.savefig(save_filepath)
-
-    for index, (percentile, latencies) in enumerate(specific_latencies.items()):
-        if nrows == 1 and ncols == 1:
-            ax = axs
-        if nrows != 1 and ncols == 1:
+        if nrows == 1 and ncols != 1:
             ax = axs[index]
         if nrows != 1 and ncols != 1:
             row_id, col_id = divmod(index, nrows)

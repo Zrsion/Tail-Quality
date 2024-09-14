@@ -62,7 +62,7 @@ if __name__ == '__main__':
         # print(confidence)
         if nrows == 1 and ncols == 1:
             ax = axs
-        if nrows != 1 and ncols == 1:
+        if nrows == 1 and ncols != 1:
             ax = axs[index]
         if nrows != 1 and ncols != 1:
             row_id, col_id = divmod(index, nrows)
@@ -75,10 +75,10 @@ if __name__ == '__main__':
         mins = numpy.array(mins)
         maxs = numpy.array(maxs)
         # ax.plot(xticks, mus, label='Mean')
-        # ax.plot(xticks, rs-ls, label='Delta Iterval')
+        ax.plot(xticks, rs-ls, label='Delta Iterval')
         # ax.fill_between(xticks, mus-sigmas, mus+sigmas, color='red', alpha=0.1, label='Confidence Interval')
         # ax.fill_between(xticks, ls, rs, color='blue', alpha=0.2, label='Confidence Interval')
-        ax.fill_between(xticks, mins, maxs, color='cyan', alpha=0.1, label='Min & Max')
+        # ax.fill_between(xticks, mins, maxs, color='cyan', alpha=0.1, label='Min & Max')
         ax.set_title(f'The Change of Statistics (confidence={confidence*100}%)')
         ax.set_xlabel('Inference Round')
         ax.set_ylabel('Statistics')
