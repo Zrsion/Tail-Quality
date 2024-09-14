@@ -55,13 +55,13 @@ def analyze_all_times(all_times: list[dict[int, float]], confidences: list[float
 
         if already_run > warm_run and (already_run - warm_run) % fit_run_number == 0:
             if stage == 'fit':
-                all_latencies.append((already_run, (get_latencies(current_times, percentiles))))
-                all_confidence_intervals.append((already_run, (get_confidence_intervals(current_times, confidences))))
+                all_latencies.append((already_run, get_latencies(current_times, percentiles)))
+                all_confidence_intervals.append((already_run, get_confidence_intervals(current_times, confidences)))
 
             if fit_distribution_number % window_size == 0 and fit_distribution_number != 0:
                 if stage == 'jsd':
-                    all_latencies.append((already_run, (get_latencies(current_times, percentiles))))
-                    all_confidence_intervals.append((already_run, (get_confidence_intervals(current_times, confidences))))
+                    all_latencies.append((already_run, get_latencies(current_times, percentiles)))
+                    all_confidence_intervals.append((already_run, get_confidence_intervals(current_times, confidences)))
             fit_distribution_number += 1
     return all_latencies, all_confidence_intervals
 
@@ -89,6 +89,7 @@ if __name__ == '__main__':
 
     confidences = args.confidences
     percentiles = args.percentiles
+    print(confidences)
 
     logger.info(f' = Stage: {stage}')
 

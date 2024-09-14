@@ -59,6 +59,7 @@ if __name__ == '__main__':
     logger.info(f'Total {len(xtick_labels)} Round.')
 
     for index, (confidence, (ls, rs, mus, sigmas, mins, maxs)) in enumerate(specifics.items()):
+        # print(confidence)
         if nrows == 1 and ncols == 1:
             ax = axs
         if nrows != 1 and ncols == 1:
@@ -81,6 +82,6 @@ if __name__ == '__main__':
         ax.set_title(f'The Change of Statistics (confidence={confidence*100}%)')
         ax.set_xlabel('Inference Round')
         ax.set_ylabel('Statistics')
-    print(rs[0]-ls[0])
-    print(rs[-1]-ls[-1])
+    # print(rs[0]-ls[0])
+    # print(rs[-1]-ls[-1])
     pyplot.savefig(save_filepath)
